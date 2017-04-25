@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+p {
+font-family:courier;
+border:1px solid powderblue;
+padding: 30px;
+margin: 50px;
+}
+</style>
+
+<h1><b>csp 586 project--Dashboard</b></h1> 
+</head>
+
+<body>
+Please select the JASON file to import  
+<input type="file" id="JasonFile">
+<script src="https://cdn.rawgit.com/Gmousse/dataframe-js/master/dist/dataframe.js"></script>
+<script>
+var DataFrame = dfjs.DataFrame;
+const df = new DataFrame({
+   "FIELD1":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],
+   "Class":["1st","2nd","3rd","Crew","1st","2nd","3rd","Crew","1st","2nd","3rd","Crew","1st","2nd","3rd","Crew","1st","2nd","3rd","Crew","1st","2nd","3rd","Crew","1st","2nd","3rd","Crew","1st","2nd","3rd","Crew"],
+   "Sex":["Male","Male","Male","Male","Female","Female","Female","Female","Male","Male","Male","Male","Female","Female","Female","Female","Male","Male","Male","Male","Female","Female","Female","Female","Male","Male","Male","Male","Female","Female","Female","Female"],
+   "Age":["Child","Child","Child","Child","Child","Child","Child","Child","Adult","Adult","Adult","Adult","Adult","Adult","Adult","Adult","Child","Child","Child","Child","Child","Child","Child","Child","Adult","Adult","Adult","Adult","Adult","Adult","Adult","Adult"],
+   "Survived":["No","No","No","No","No","No","No","No","No","No","No","No","No","No","No","No","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes"],
+   "Freq":[0,0,35,0,0,0,17,0,118,154,387,670,4,13,89,3,5,11,13,0,1,13,14,0,57,14,75,192,140,80,76,20]
+});
+
+//DataFrame.fromJSON("https://github.com/Gmousse/dataframe-js/blob/develop/tests/data/Titanic_2.json").then(df => df.show());
+var columnArray=df.listColumns();
+//document.write(columnArray);
+//const df1=df.select(columnArray);
+df.show(100);
+
+var firstSelected = 'Class';
+var secondSelected = 'Freq';
+var thirdSelected = 'Age';
+
+
+var numOfColumnSelected = 1;   // number of column user selected
+var receivedMessage  = 'equal';
+var receiveNumber = 5;
+
+if(numOfColumnSelected == 1){
+    if(receivedMessage === 'moreThan'){
+        df.filter(row => row.get(secondSelected) >= receiveNumber).show();
+    }
+
+    if(receivedMessage === 'lessThan'){
+        df.filter(row => row.get(secondSelected) <= receiveNumber).show();
+    }
+    if(receivedMessage === 'equal'){
+        df.filter(row => row.get(secondSelected) == receiveNumber).show();
+    }
+}
+
+
+
+else if(numOfColumnSelected == 2){
+    if( receivedMessage === 'mean'){
+        const selectedDF = df.select(firstSelected, secondSelected);
+        selectedDF.groupBy(firstSelected).aggregate(group => group.stat.mean(secondSelected)).rename('aggregation', 'mean').show();
+    }
+    else if( receivedMessage === 'min'){
+        const selectedDF = df.select(firstSelected, secondSelected);
+        selectedDF.groupBy(firstSelected).aggregate(group => group.stat.min(secondSelected)).rename('aggregation', 'min').show();
+    }
+    else if( receivedMessage === 'max'){
+        const selectedDF = df.select(firstSelected, secondSelected);
+        selectedDF.groupBy(firstSelected).aggregate(group => group.stat.max(secondSelected)).rename('aggregation', 'max').show();
+    }
+    else if( receivedMessage === 'deviation'){
+        const selectedDF = df.select(firstSelected, secondSelected);
+        selectedDF.groupBy(firstSelected).aggregate(group => group.stat.mean(secondSelected)).rename('aggregation', 'deviation').show();
+    }
+    else if( receivedMessage === 'count'){
+        const selectedDF = df.select(firstSelected, secondSelected);
+        selectedDF.groupBy(firstSelected, secondSelected).aggregate(group => group.count()).rename('aggregation', 'count').sortBy('count', ture).show();
+    }
+}
+
+
+
+/*
+console.log(firstSelected + ':');
+console.log(' min : ' + df.stat.min(firstSelected));
+console.log(' max : ' + df.stat.max(firstSelected));
+console.log(' avergae : ' + df.stat.mean(firstSelected));
+console.log(' count : ' + df.count());
+console.log(' stand deviation : ' + df.stat.sd(firstSelected));
+
+console.log(secondSelected + ':');
+console.log(' min : ' + df.stat.min(secondSelected));
+console.log(' max : ' + df.stat.max(secondSelected));
+console.log(' avergae : ' + df.stat.mean(secondSelected));
+console.log(' count : ' + df.count());
+console.log(' stand deviation : ' + df.stat.sd(secondSelected));
+
+console.log(thirdSelected + ':');
+console.log(' min : ' + df.stat.min(thirdSelected));
+console.log(' max : ' + df.stat.max(thirdSelected));
+console.log(' avergae : ' + df.stat.mean(thirdSelected));
+console.log(' count : ' + df.count());
+console.log(' stand deviation : ' + df.stat.sd(thirdSelected));
+
+//var helloBoy  = ' min : ' + df.stat.min(thirdSelected);
+
+*/
+
+</script>
+</body>
+</html>

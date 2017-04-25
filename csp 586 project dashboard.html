@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+    .center {
+        border: 1px solid powderblue;
+        padding: 30px;
+        margin: 30px;
+
+    }
+
+    </style>
+
+    <h1 align="center">CSP 586 Project--Dashboard<br></h1> 
+</head>
+
+<body>
+    <div class="center">
+    Please Select JASON File Source  
+    <input type="file" id="JasonFile"> <br>
+    </div>
+
+    <div class="center" id="checkboxDiv"></div>
+    <div class="center" id="groupByDiv"></div>
+    <div class="center" id="chartSettingDiv">
+        <input type="radio" value="Bar" name="radioButton" > Bar </input>
+        <input type="radio" value="Line" name="radioButton" > Line </input>
+        <input type="radio" value="Pie" name="radioButton" > Pie </input>
+        <input type="radio" value="Stacked Bar" name="radioButton" > Stacked Bar </input>
+    </div>
+    <canvas id="myChart" width="80" height="60" style="border:1px solid powderblue;"></canvas>
+</body>
+
+<script src="dataframe.js"></script>
+<script src="Chart.bundle.js"></script>
+<script type="text/javascript" src="DataUnit.js"></script>
+<script type="text/javascript" src="ChartUnitConfig.js" > </script>
+<script type="text/javascript" src="ConfiguredChart.js"></script>
+<script type="text/javascript" src="BarChart.js"></script>
+<script type="text/javascript" src="View.js"></script>
+<script type="text/javascript" src="ChartFactory.js"></script>
+<script type="text/javascript" src="MyDataFrame.js"></script>
+<script type="text/javascript" src="Controler.js"></script>
+<script type="text/javascript" src="ChartConfig.js"></script>
+<script type="text/javascript" src="StackedBarChart.js"></script>
+<script type="text/javascript" src="LineChart.js"></script>
+<script type="text/javascript" src="PieChart.js"></script>
+
+
+
+<script>
+    var DataFrame = dfjs.DataFrame;
+
+  /*  var file="Chicago.json";
+DataFrame.fromJSON(file).then(df => df);
+const [height, weight] = df.dim();*/
+   const dataset = new DataFrame({
+    "FIELD1":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],
+    "Class":["1st","2nd","3rd","Crew","1st","2nd","3rd","Crew","1st","2nd","3rd","Crew","1st","2nd","3rd","Crew","1st","2nd","3rd","Crew","1st","2nd","3rd","Crew","1st","2nd","3rd","Crew","1st","2nd","3rd","Crew"],
+    "Sex":["Male","Male","Male","Male","Female","Female","Female","Female","Male","Male","Male","Male","Female","Female","Female","Female","Male","Male","Male","Male","Female","Female","Female","Female","Male","Male","Male","Male","Female","Female","Female","Female"],
+    "Age":["Child","Child","Child","Child","Child","Child","Child","Child","Adult","Adult","Adult","Adult","Adult","Adult","Adult","Adult","Child","Child","Child","Child","Child","Child","Child","Child","Adult","Adult","Adult","Adult","Adult","Adult","Adult","Adult"],
+    "Survived":["No","No","No","No","No","No","No","No","No","No","No","No","No","No","No","No","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes","Yes"],
+    "Freq":[0,0,35,0,0,0,17,0,118,154,387,670,4,13,89,3,5,11,13,0,1,13,14,0,57,14,75,192,140,80,76,20]
+    });
+    var data=new MyDataFrame(new DataFrame(dataset));
+    var view=new View(data.df);
+    var controler=new Controler(view,data);
+    var myChart;
+
+    data.registerObservers(view);
+    data.registerObservers(controler);
+    
+    function selectColumns(){
+        controler.selectColumns();
+    }
+    function filter(){
+        controler.filter();
+    }
+
+    function chartButtonClicked(){
+        controler.chart();
+    }
+
+    function addFilter(){
+        controler.addFilter();
+    }
+    function addValue(){
+        controler.addValue();
+    }
+    function deleteValue(button){
+        controler.deleteValue(button);
+    }
+    function deleteFilter(button){
+        controler.deleteFilter(button);
+    }
+</script>
+
+</html>
