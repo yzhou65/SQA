@@ -17,7 +17,7 @@ class LineChart extends ConfiguredChart{
                             'rgba(75, 192, 192, 1)',
                             'rgba(153, 102, 255, 1)',
                             'rgba(255, 159, 64, 1)'],
-                    borderWidth:2
+                    borderWidth:1
                 }
             for(var i=0;i<this.data.datasets.length;i++){
                 var random=Math.round(Math.random()*5);
