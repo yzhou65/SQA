@@ -80,6 +80,28 @@ class Controler{
 	  this.data.notifyObservers();        
 	}
 
+	groupby(){
+		var column1, column2,operation, newName;
+		column1=this.view.labelGroupby1.options[this.view.labelGroupby1.selectedIndex].label;
+		column2=this.view.labelGroupby2.options[this.view.labelGroupby2.selectedIndex].label;
+		operation=this.view.labelGroupby3.options[this.view.labelGroupby3.selectedIndex].label;
+		newName=this.view.newGroupName.value;
+				
+				if(operation=='Avg'){
+					this.data.df= this.data.df.groupBy(column1, column2);
+					this.data.df.aggregate(group => group.count()).rename('aggregation', 'groupCount');
+				} else if(operation=='Max'){
+					this.data.df=this.data.df.filter(row=>row.get(selectedOption1)==this.view.filterDataSets[i].option3.value);
+				}else if(operation=='Min'){
+					this.data.df=this.data.df.filter(row=>row.get(selectedOption1)<view.filterDataSets[i].option3.value);
+				}else if(operation=='Count'){
+					this.data.df= this.data.df.groupBy(column1, column2);
+					this.data.df.aggregate(group => group.count(column1)).rename('aggregation', newName);	
+				}
+
+ 		this.data.df.show(); 
+	    this.data.notifyObservers();        
+	}
 	
 	update(df){
 		this.data.df=df;

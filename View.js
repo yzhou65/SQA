@@ -27,9 +27,11 @@ class View{
 		this.createTextNode(" Group By ",this.groupByDiv);
 		this.labelGroupby2=this.createSelection(df.listColumns(),this.groupByDiv);
 		this.createTextNode(" Having ",this.groupByDiv);
-		this.labelGroupby3=this.createSelection(['Avg','Max','Min'],this.groupByDiv);
+		this.labelGroupby3=this.createSelection(['Avg','Max','Min','Count'],this.groupByDiv);
 		this.createTextNode(" As ",this.groupByDiv);
-		this.createInputText(this.groupByDiv);
+		this.newGroupName=this.createInputText(this.groupByDiv);
+		this.createButton(" groupby ","groupbyClicked()",this.groupByDiv);
+
 
 //construct chartsetting selections 
 		this.createBreakLine(this.chartSettingDiv);    
@@ -47,6 +49,35 @@ class View{
 		this.createButton(" + ","addValue()",this.chartSettingDiv);
 		this.createButton(" chart ","chartButtonClicked()",this.chartSettingDiv);
 	}
+createTable(div,df) {
+        var table = document.createElement('TABLE');
+        var columns=df.listColumns();
+        var rows=df.count();
+        var tableBody = document.createElement('TBODY');
+        table.appendChild(tableBody);
+        var array=df.toArray();
+
+        var tr = document.createElement('TR');
+        tableBody.appendChild(tr);
+        for(var i=0;i<columns.length;i++){
+            var td=document.createElement('TD');
+            td.appendChild(document.createTextNode(columns[i]));
+            tr.appendChild(td);
+        }
+
+        for (var i = 0; i < rows; i++) {
+            var tr = document.createElement('TR');
+            tableBody.appendChild(tr);
+
+            for (var j = 0; j < columns.length; j++) {
+                var td = document.createElement('TD');
+                td.setAttribute('align','center');
+                td.appendChild(document.createTextNode(array[i][j]));
+                tr.appendChild(td);
+            }
+        }
+        div.appendChild(table);
+}
 
      createSelection(labels,div){
         var select = document.createElement("SELECT");
@@ -71,6 +102,7 @@ class View{
 	createButton(value,onclick,div){
 		var button=document.createElement("input");
 		button.setAttribute("type","button");
+		button.setAttribute("class","font");
 		button.setAttribute("value",value);
 		button.setAttribute("onclick",onclick);
 		div.appendChild(button);
@@ -84,6 +116,7 @@ class View{
 			checkBox[i]= document.createElement("input");
 			checkBox[i].setAttribute("type", "checkbox");
 			labels[i]=document.createElement("label");
+			labels[i].setAttribute("class","font");
 			labels[i].htmlFor=checkBox[i];
 			labels[i].appendChild(document.createTextNode(array[i]));
 			div.appendChild(checkBox[i]);
@@ -95,7 +128,10 @@ class View{
 	
 	createTextNode(text,div){
 		var textNode=document.createTextNode(text);
-		div.appendChild(textNode);
+		var span = document.createElement('span');
+		span.setAttribute('class', 'font');
+		span.appendChild(textNode);
+		div.appendChild(span);
 
 	}
 
